@@ -13,7 +13,9 @@ def init_browser():
 def scrape():
     browser = init_browser()
 
-    # Visit visitcostarica.herokuapp.com
+    ### NASA MARS NEWS
+
+    # Visit Nasa Mars News
     url = "https://mars.nasa.gov/news/"
     browser.visit(url)
 
@@ -44,20 +46,46 @@ def scrape():
 
     # save a complete url string for this image
     featured_image_url = f'https://data-class-jpl-space.s3.amazonaws.com/JPL_Space/{full_img}'
-    
-    # BONUS: Find the src for the sloth image
-    relative_image_path = soup.find_all('img')[2]["src"]
-    sloth_img = url + relative_image_path
+
+    ### MARS FACTS
+
+    # Mars Facts: scrape the table containing facts about the planet including Diameter, Mass, etc.
+    facts_url = "https://space-facts.com/mars/"
+    browser.visit(facts_url)
+    html = browser.html
+
+    # Use Pandas to convert the data to a HTML table string
+    table = pd.read_html(facts_url)
+    mars_facts = table[1]
+    # convert table to html
+    mars_facts_html = mars_facts.to_html()
+
+    ### MARS HEMISPHERES
+    # Mars Hemispheres
+    hem_url = "https://astrogeology.usgs.gov/search/results?q=hemisphere+enhanced&k1=target&v1=Mars"
+    browser.visit(hem_url)
+    html = browser.html
+
+    # hemisphere urls
+    hemisphere_image_urls = [
+    "title": "cerberus_enhanced", "img url": "https://astrogeology.usgs.gov/cache/images/f5e372a36edfa389625da6d0cc25d905_cerberus_enhanced.tif_full.jpg",
+    "title": "schiaparelli_enhanced", "img url": "https://astrogeology.usgs.gov/cache/images/3778f7b43bbbc89d6e3cfabb3613ba93_schiaparelli_enhanced.tif_full.jpg",
+    "title": "syrtis_major_enhanced", "img url": "https://astrogeology.usgs.gov/cache/images/555e6403a6ddd7ba16ddb0e471cadcf7_syrtis_major_enhanced.tif_full.jpg",
+    "title": "valles_marineris_enhanced", "img url": "https://astrogeology.usgs.gov/cache/images/b3c7c6c9138f57b4756be9b9c43e3a48_valles_marineris_enhanced.tif_full.jpg",
+    ] 
+
 
     # Store data in a dictionary
-    costa_data = {
-        "sloth_img": sloth_img,
-        "min_temp": min_temp,
-        "max_temp": max_temp
+    mars_data = {
+        "news_title": news_title,
+        "news_p": news_p,
+        "featured_image_url": featured_image_url,
+        "mars_facts_html": mars_facts_html,
+        "hemisphere_image_urls": hemisphere_image_urls
     }
 
     # Close the browser after scraping
     browser.quit()
 
     # Return results
-    return costa_data
+    return mars_data
