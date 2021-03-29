@@ -98,7 +98,7 @@ Start by converting your Jupyter notebook into a Python script called scrape_mar
 
 Next, create a route called /scrape that will import your scrape_mars.py script and call your scrape function.
 
-Store the return value in Mongo as a Python dictionary.
+Store the return value in  Mongo as a Python dictionary.
 
 
 
