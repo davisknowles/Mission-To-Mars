@@ -2,13 +2,14 @@ from splinter import Browser
 from bs4 import BeautifulSoup as bs
 import time
 from webdriver_manager.chrome import ChromeDriverManager
-
+import pandas as pd
 
 def init_browser():
     # @NOTE: Replace the path with your actual path to the chromedriver
-    executable_path = {"/Users/d_knowles/Desktop/web-scraping-challenge/App/chromedriver": ChromeDriverManager().install()} (edited) 
-    return Browser("chrome", **executable_path, headless=False)
-
+    # executable_path = {"/Users/d_knowles/Desktop/web-scraping-challenge/missions_to_mars/chromedriver": ChromeDriverManager().install()} #(edited) 
+    # return Browser("chrome", **executable_path, headless=False)
+    executable_path = {'executable_path': ChromeDriverManager().install()}
+    return Browser('chrome', **executable_path, headless=False)
 
 def scrape():
     browser = init_browser()
@@ -58,7 +59,7 @@ def scrape():
     table = pd.read_html(facts_url)
     mars_facts = table[1]
     # convert table to html
-    mars_facts_html = mars_facts.to_html()
+    mars_facts_html = mars_facts.to_html(index=False)
 
     ### MARS HEMISPHERES
     # Mars Hemispheres
@@ -68,11 +69,11 @@ def scrape():
 
     # hemisphere urls
     hemisphere_image_urls = [
-    "title": "cerberus_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/f5e372a36edfa389625da6d0cc25d905_cerberus_enhanced.tif_full.jpg",
-    "title": "schiaparelli_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/3778f7b43bbbc89d6e3cfabb3613ba93_schiaparelli_enhanced.tif_full.jpg",
-    "title": "syrtis_major_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/555e6403a6ddd7ba16ddb0e471cadcf7_syrtis_major_enhanced.tif_full.jpg",
-    "title": "valles_marineris_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/b3c7c6c9138f57b4756be9b9c43e3a48_valles_marineris_enhanced.tif_full.jpg",
-    ] 
+    {"title": "cerberus_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/f5e372a36edfa389625da6d0cc25d905_cerberus_enhanced.tif_full.jpg"},
+    {"title": "schiaparelli_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/3778f7b43bbbc89d6e3cfabb3613ba93_schiaparelli_enhanced.tif_full.jpg"},
+    {"title": "syrtis_major_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/555e6403a6ddd7ba16ddb0e471cadcf7_syrtis_major_enhanced.tif_full.jpg"},
+    {"title": "valles_marineris_enhanced", "img_url": "https://astrogeology.usgs.gov/cache/images/b3c7c6c9138f57b4756be9b9c43e3a48_valles_marineris_enhanced.tif_full.jpg"}
+    ]
 
 
     # Store data in a dictionary
