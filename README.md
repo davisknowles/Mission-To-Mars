@@ -1,6 +1,6 @@
 # Mission to Mars
 
-### Web scraping app with web page
+Web scraping app with HTML page
 
 ## Objective
 Build a web application that scrapes various websites for data related to NASA's Mission to Mars and display the information in a single HTML page.
